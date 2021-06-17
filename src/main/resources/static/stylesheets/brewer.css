@@ -1,0 +1,182 @@
+/*
+########## COMPONENTES #############
+*/
+
+/*Field action*/
+.bw-field-action {
+	display: flex;
+}
+
+.bw-field-action__icon {
+	margin: 6px 0 0 5px;
+}
+
+/*
+######### UTILITÁRIOS ##########
+*/
+.bw-glyphicon-large {
+	font-size: 20px;
+}
+
+.bw-required > .control-label::after {
+	content: "*";
+}
+
+/*
+######## UPLOAD FILE COMPOMNENT #########
+*/
+.bw-upload {
+	padding: 15px;
+	
+	border: 1px dashed #ddd;
+	border-radius: 4px;
+	background: #fafafa;
+	
+	text-align: center;
+}
+
+.bw-upload-form-file {
+	display: inline-block;
+	vertical-align: middle;
+	position: relative;
+	overflow: hidden;
+	margin-bottom: 1px;
+}
+
+.bw-upload-form-file > input[type=file] {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	width: 100%;
+	opacity: 0;
+	cursor: pointer;
+	
+	font-size: 500px;
+}
+
+/*
+############### TABLES STYLING ##################
+*/
+.bw-tabela-simples {
+	margin-top: 30px;
+}
+
+.bw-tabela-simples table tr th {
+	border-bottom-width: 1px;
+}
+
+.bw-tabela-simples table tr td {
+	border-top: none;
+	border-bottom: 1px solid #e7eaec;
+	padding: 10px;
+	vertical-align: middle;
+}
+
+/*
+################# TABLE CERVEJA ##########################
+*/
+.table-cerveja-col-foto {
+	min-width: 50px;
+	width: 50px;
+}
+
+.table-cerveja-col-sku {
+	width: 50px;
+	text-align: center;
+}
+
+.table-cerveja-col-estilo {
+	width: 120px;
+}
+
+.table-cerveja-col-origem {
+	width: 100px;
+}
+
+.table-cerveja-col-preco {
+	width: 100px;
+	text-align: right;
+}
+
+.table-col-accoes {
+	width: 80px;
+}
+
+/*
+################# TABLE ESTILO #####################
+*/
+.table-estilo-col-id {
+	width: 80px;
+	text-align: right;
+}
+
+/*
+################# TABLE CLIENTE ####################
+*/
+.table-cliente-col-tipo-pessoa {
+	width: 120px;
+	text-align: center;
+}
+
+.table-cliente-col-cpf-cnpj {
+	width: 140px;
+	text-align: right;
+}
+
+.table-cliente-col-telefone {
+	width: 140px;
+	text-align: right;
+}
+
+.table-cliente-col-cidade-estado {
+	width: 180px;
+	text-align: right;
+}
+
+/*
+################# TABLE CIDADE #####################
+*/
+.table-cidade-col-id {
+	width: 60px;
+	text-align: center;
+}
+
+.table-cidade-col-estado {
+	width: 140px;
+	text-align: right;
+}
+
+/*
+################# TABLE USUARIO #####################
+*/
+.table-usuario-col-checkbox {
+	width: 30px;
+	text-align: center;
+}
+
+/*
+################# TABLE CERVEJA PAGINA VENDAS #####################
+*/
+.bw-tabela-cervejas {
+	margin-bottom: 15px;
+}
+
+.bw-tabela-cervejas__vazio {
+	padding: 15px 15px;
+	
+	border: 1px dashed #ddd;
+	
+	text-align: center;
+	font-size: 1.2em;
+	font-weight: 300;
+	color: #555;
+}
+
+/*
+################# CUSTOMIZAÇÕES #####################
+*/
+.checkbox input[type="checkbox"]:checked + input + label::after {
+	font-family: 'FontAwesome';
+	content: "\f00c";
+}

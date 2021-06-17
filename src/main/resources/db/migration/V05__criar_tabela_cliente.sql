@@ -1,0 +1,14 @@
+CREATE TABLE cliente(
+	id BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+	nome VARCHAR(50) NOT NULL,
+	tipo_pessoa VARCHAR(20) NOT NULL,
+	cpf_cnpj VARCHAR(20),
+	telefone VARCHAR(20),
+	email VARCHAR(50) NOT NULL,
+	logradouro VARCHAR(50),
+	numero VARCHAR(50),
+	complemento VARCHAR(50),
+	cep VARCHAR(20),
+	cidade_id BIGINT(20) NOT NULL,
+	FOREIGN KEY (cidade_id) REFERENCES cidade(id)
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;

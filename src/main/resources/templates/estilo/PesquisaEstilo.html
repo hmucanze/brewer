@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html	lang="pt"
+		xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:brewer="http://www.brewer.mucanze.com"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorator="'layout/LayoutPadrao'">
+		
+		<head>
+			<title>Pesquisa de Estilos</title>
+		</head>
+		
+		<body>
+			<section layout:fragment="conteudo">
+				<div class="page-header">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-xs-10">
+								<h1>Pesquisa de Estilos</h1>
+							</div>
+							<div class="col-xs-2">
+								<div class="aw-page-header-controls">
+									<a class="btn btn-default" th:href="@{estilos/novo}">
+										<i class="glyphicon glyphicon-plus-sign"></i><span class="hidden-sm hidden-xs"> Novo estilo</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="container-fluid">
+					<form th:object="${estiloFilter}">
+						<div class="form-group">
+							<label for="nome" class="control-label">Nome</label>
+							<input type="text" id="nome" class="form-control" th:field="*{nome}">
+						</div>
+						
+						<button type="submit" class="btn btn-primary">Pesquisar</button>
+					</form>
+					
+					<div class="table-responsive bw-tabela-simples">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th class="table-estilo-col-id">id</th>
+									<th class="table-estilo-col-nome">
+										<brewer:order page="${pagina}" field="nome" text="Nome">
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="estilo : ${pagina.conteudo}">
+									<td th:text="${estilo.id}">1</td>
+									<td th:text="${estilo.nome}">Pilsner</td>
+								</tr>
+								
+								<tr th:if="${pagina.vazia}">
+									<td colspan="2">Nenhum estilo encontrado</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					
+					<brewer:pagination page="${pagina}">
+				</div>
+			</section>
+		</body>
+</html>

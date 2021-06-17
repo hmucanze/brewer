@@ -1,0 +1,2 @@
+ALTER TABLE cliente MODIFY
+cpf_cnpj VARCHAR(20) NOT NULL;

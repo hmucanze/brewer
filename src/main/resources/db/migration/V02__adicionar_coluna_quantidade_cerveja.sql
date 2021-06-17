@@ -1,0 +1,2 @@
+ALTER TABLE cerveja
+ADD COLUMN quantidade INT NOT NULL;

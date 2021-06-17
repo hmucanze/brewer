@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html	lang="pt"
+		xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:brewer="http://www.brewer.mucanze.com"
+		xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorator="'layout/LayoutPadrao'">
+		
+	<head>
+		<title>Pesquisa de cervejas</title>
+	</head>
+	
+	<body>
+		<section layout:fragment="conteudo">
+			<div class="page-header">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-xs-10">
+							<h1>Pesquisa de Cervejas</h1>
+						</div>
+						
+						<div class="col-xs-2" sec:authorize-url="/cervejas/novo">
+							<div class="aw-page-header-controls">
+								<a class="btn btn-default" th:href="@{/cervejas/novo}">
+									<i class="glyphicon glyphicon-plus-sign"></i><span class="hidden-xs hidden-sm">Nova Cerveja</span>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="container-fluid">
+				<form method="GET" th:object="${cervejaFilter}">
+					<div class="row">
+						<div class="col-sm-3 form-group">
+							<label for="sku" class="control-label">SKU</label>
+							<input type="text" id="sku" class="form-control" autofocus="autofocus" th:field="*{sku}">
+						</div>
+						
+						<div class="col-sm-9 form-group">
+							<label for="nome" class="control-label">Nome</label>
+							<input type="text" id="nome" class="form-control" th:field="*{nome}">
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-sm-6 form-group">
+							<label for="estilo" class="control-label">Estilo</label>
+							<select id="estilo" class="form-control" th:field="*{estilo}">
+								<option value="">Todos estilos</option>
+								<option th:each="estilo : ${estilos}" th:value="${estilo.id}" th:text="${estilo.nome}">Pilsner</option>
+							</select>
+						</div>
+						
+						<div class="col-sm-6 form-group">
+							<label for="sabor" class="control-label">Sabor</label>
+							<select id="sabor" class="form-control" th:field="*{sabor}">
+								<option value="">Todos sabores</option>
+								<option th:each="sabor : ${sabores}" th:value="${sabor}" th:text="${sabor.descricao}">Adocicada</option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-sm-6 form-group">
+							<label for="origem">Origem</label>
+							<div>
+								<th:block th:each="origem : ${origens}">
+									<div class="radio radio-inline">
+										<input type="radio" th:id="|id_${origem}|" th:value="${origem}" name="origem" th:field="*{origem}">
+										<label th:for="|id_${origem}|" th:text="${origem.descricao}" class="control-label">Nacional</label>
+									</div>
+								</th:block>
+								<div class="radio radio-inline">
+									<input type="radio" id="todasOrigens" th:checked="*{origem == null}" name="origem">
+									<label for="todasOrigens" class="control-label">Todas Origens</label>
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-sm-6 form-group">
+							<label for="precoDe">Preço Unitário</label>
+							<div class="form-inline">
+								<input type="text" class="form-control aw-form-control-inline-sm  js-decimal" id="precoDe" th:field="*{precoDe}">
+								<label for="precoAte">Até</label>
+								<input type="text" class="form-control aw-form-control-inline-sm  js-decimal" id="precoAte" th:field="*{precoAte}">
+							</div>
+						</div>
+					</div>
+					
+					<button type="submit" class="btn btn-primary">Pesquisar</button>
+				</form>
+				
+				<div class="table-responsive bw-tabela-simples">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th class="table-cerveja-col-foto"></th>
+								<th class="table-cerveja-col-sku">
+									<!-- <th:block th:replace="fragments/Ordenacao :: order (${pagina},'sku','SKU')"></th:block> -->
+									<brewer:order page="${pagina}" field="sku" text="SKU">
+								</th>
+								<th class="table-cerveja-col-nome">
+									<brewer:order page="${pagina}" field="nome" text="Nome">
+								</th>
+								<th class="table-cerveja-col-estilo">Estilo</th>
+								<th class="table-cerveja-col-origem">Origem</th>
+								<th class="table-cerveja-col-preco">Preço</th>
+								<th class="table-col-accoes"></th>
+							</tr>
+						</thead>
+						
+						<tbody>
+							<tr th:each="cerveja : ${pagina.conteudo}">
+								<td class="text-center">
+									<img th:src="@{fotos/thumbnail.{foto}(foto = ${cerveja.fotoOuMock})}" class="img-responsive">
+								</td>
+								<td class="text-center" th:text="${cerveja.sku}">AA1234</td>
+								<td th:text="${cerveja.nome}">Bohemia</td>
+								<td th:text="${cerveja.estilo.nome}">Pilsner</td>
+								<td th:text="${cerveja.origem.descricao}">Nacional</td>
+								<td th:text="|${cerveja.preco} MT|">80 MT</td>
+								<td class="text-center" sec:authorize="hasRole('ROLE_CADASTRAR_CERVEJA')">
+									<a class="btn btn-link btn-xs" title="Excluir">
+										<i class="glyphicon glyphicon-remove"></i>
+									</a>
+									<a class="btn btn-link btn-xs" title="Editar">
+										<i class="glyphicon glyphicon-pencil"></i>
+									</a>
+								</td>
+							</tr>
+							<tr th:if="${pagina.vazia}">
+								<td colspan="7">Nenhuma cerveja encontrada.</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				
+				<!-- <th:block th:replace="fragments/Paginacao.html::paginacao (${pagina})"></th:block> -->
+				<brewer:pagination page="${pagina}">
+			</div>
+		</section>
+	</body>
+</html>
